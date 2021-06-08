@@ -107,6 +107,22 @@ class FormComponent extends Component {
         })
     }
 
+    followBit = () => {
+        axios.post(`http://localhost:3001/validate/follow/:id`,
+            { id: this.context.twitterId, target_user_id: "1299932702557138946" }
+        )
+            .then(res => console.log(res))
+            .catch(err => console.log(err))
+    }
+
+    followRay = () => {
+        axios.post(`http://localhost:3001/validate/follow/:id`,
+            { id: this.context.twitterId, target_user_id: "15830666" }
+        )
+            .then(res => console.log(res))
+            .catch(err => console.log(err))
+    }
+
     onSubmit = () => {
         if (this.state.answer1 && this.state.likedAndRetweeted && this.state.followed) {
             const body = {
@@ -164,6 +180,8 @@ class FormComponent extends Component {
     render() {
         const { showFollowedIcon, showLikedAndRetweetedIcon, followed, likedAndRetweeted } = this.state;
 
+        // console.log(this.context.twitterId)
+
         return (
             <>
                 <Row justify='center'>
@@ -212,12 +230,22 @@ class FormComponent extends Component {
                                             <a href={"https://twitter.com/BitDotCountry"} target="_blank">https://twitter.com/BitDotCountry</a>
                                         </Form.Item>
                                     </Col>
+                                    <Col>
+                                        <Button onClick={this.followBit} style={{marginLeft: '10px'}}>
+                                            Follow
+                                        </Button>
+                                    </Col>
                                 </Row>
                                 <Row>
                                     <Col>
                                         <Form.Item>
                                             <a href={"https://twitter.com/RayLuCode"} target="_blank">https://twitter.com/RayLuCode</a>
                                         </Form.Item>
+                                    </Col>
+                                    <Col>
+                                        <Button onClick={this.followRay} style={{marginLeft: '10px'}}>
+                                            Follow
+                                        </Button>
                                     </Col>
                                 </Row>
                                 <Row>
