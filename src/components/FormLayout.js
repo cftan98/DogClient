@@ -109,17 +109,53 @@ class FormComponent extends Component {
 
     followBit = () => {
         axios.post(`http://localhost:3001/validate/follow/:id`,
-            { id: this.context.twitterId, target_user_id: "1299932702557138946" }
+            { id: this.context.twitterId, target_user_id: "1299932702557138946" },
+            { withCredentials: true }
         )
-            .then(res => console.log(res))
+            .then(res => {
+                console.log(res.data)
+                if (res.data?.Is_success) {
+                    notification['success']({
+                        message: 'Success',
+                        description: 'Done!',
+                        style: { backgroundColor: "rgb(212, 255, 226)" },
+                        duration: 3.5
+                    });
+                }
+            })
             .catch(err => console.log(err))
     }
 
     followRay = () => {
         axios.post(`http://localhost:3001/validate/follow/:id`,
-            { id: this.context.twitterId, target_user_id: "15830666" }
+            { id: this.context.twitterId, target_user_id: "15830666" },
+            { withCredentials: true }
         )
-            .then(res => console.log(res))
+            .then(res => {
+                if (res.data?.Is_success) {
+                    notification['success']({
+                        message: 'Success',
+                        description: 'Done!',
+                        style: { backgroundColor: "rgb(212, 255, 226)" },
+                        duration: 3.5
+                    });
+                }
+            })
+            .catch(err => console.log(err))
+    }
+
+    retweetAndLike = () => {
+        axios.post(`http://localhost:3001/validate/likeAndRetweet/`, {}, { withCredentials: true })
+            .then(res => {
+                if (res.data?.Is_success) {
+                    notification['success']({
+                        message: 'Success',
+                        description: 'Done!',
+                        style: { backgroundColor: "rgb(212, 255, 226)" },
+                        duration: 3.5
+                    });
+                }
+            })
             .catch(err => console.log(err))
     }
 
@@ -231,7 +267,7 @@ class FormComponent extends Component {
                                         </Form.Item>
                                     </Col>
                                     <Col>
-                                        <Button onClick={this.followBit} style={{marginLeft: '10px'}}>
+                                        <Button onClick={this.followBit} style={{ marginLeft: '10px' }} type="primary">
                                             Follow
                                         </Button>
                                     </Col>
@@ -243,7 +279,7 @@ class FormComponent extends Component {
                                         </Form.Item>
                                     </Col>
                                     <Col>
-                                        <Button onClick={this.followRay} style={{marginLeft: '10px'}}>
+                                        <Button onClick={this.followRay} style={{ marginLeft: '10px' }} type="primary">
                                             Follow
                                         </Button>
                                     </Col>
@@ -295,6 +331,11 @@ class FormComponent extends Component {
                                     </Col>
                                 </Row>
                                 <Row>
+                                    <Col>
+                                        <Button onClick={this.retweetAndLike} style={{ marginRight: '20px' }} type="primary">
+                                            Do it now!
+                                        </Button>
+                                    </Col>
                                     <Col>
                                         <Form.Item>
                                             <Button
