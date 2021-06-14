@@ -4,6 +4,18 @@ import { UserContext } from '../contexts/UserContext';
 import NotAuthorized from '../errors/NotAuthorized';
 import axios from 'axios';
 import { CheckCircleTwoTone, CloseCircleTwoTone } from '@ant-design/icons';
+import {
+    TwitterTimelineEmbed,
+    TwitterShareButton,
+    TwitterFollowButton,
+    TwitterHashtagButton,
+    TwitterMentionButton,
+    TwitterTweetEmbed,
+    TwitterMomentShare,
+    TwitterDMButton,
+    TwitterVideoEmbed,
+    TwitterOnAirButton
+} from 'react-twitter-embed';
 
 export default class FormLayout extends Component {
     state = {
@@ -216,11 +228,19 @@ class FormComponent extends Component {
     render() {
         const { showFollowedIcon, showLikedAndRetweetedIcon, followed, likedAndRetweeted } = this.state;
 
-        // console.log(this.context.twitterId)
+        //console.log(this.context.userName)
 
         return (
             <>
                 <Row justify='center'>
+                    <Col pull={2} style={{ marginTop: '5%' }}>
+                        <TwitterTimelineEmbed
+                            sourceType="profile"
+                            screenName={this.context.userName}
+                            options={{ height: 400 }}
+                        />
+                    </Col>
+
                     <Col>
                         <Card
                             hoverable
@@ -360,7 +380,7 @@ class FormComponent extends Component {
                                         [
                                             { required: true, message: 'Please enter your response!' },
                                             { whitespace: true, message: "Please enter your response!" },
-                                            { pattern: new RegExp('20'), message: "The answer is wrong!" }
+                                            { pattern: /^20$/, message: "The answer is wrong!" }
                                         ]
                                     }
                                 >
